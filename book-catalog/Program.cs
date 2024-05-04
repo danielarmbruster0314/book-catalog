@@ -1,11 +1,15 @@
-using book_catalog.Data;
+﻿using book_catalog.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<BookCatalogContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BookCatalogContext") ?? throw new InvalidOperationException("Connection string 'BookCatalogContext' not found.")));
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
